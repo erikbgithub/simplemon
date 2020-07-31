@@ -1,2 +1,6 @@
-# simplemon
-Simple monitoring example that can integrate well with simpleserver
+# Simplemon
+
+A simple monitoring example solution that integrates well with
+[simpleserver]().
+
+Check out the `prom/` folder for Prometheus config and installation details.
