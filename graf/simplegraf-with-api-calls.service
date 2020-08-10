@@ -1,0 +1,24 @@
+[Unit]
+Description=Simple Grafana Service
+After=simplemonpod.service
+Requires=simplemonpod.service
+PartOf=simplemonpod.service
+
+[Service]
+Restart=on-failure
+RestartSec=30
+ExecStop=podman stop simplegraf
+ExecStartPre=-podman stop simplegraf
+ExecStartPre=-podman rm -f simplegraf
+ExecStart=podman run \
+    --detach \
+    --network host \
+    --publish 3000:3000 \
+    --name simplegraf \
+    grafana/grafana:latest
+ExecStartPost=/usr/bin/bash -c "/usr/bin/sleep 3 && %h/.local/bin/default-dashboard.py"
+KillMode=none
+Type=forking
+
+[Install]
+WantedBy=default.target

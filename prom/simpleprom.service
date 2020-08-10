@@ -4,18 +4,20 @@ Description=Prometheus Timeseries Server
 [Service]
 Restart=on-failure
 RestartSec=30
-# make possible leftovers from a previous run go away
-ExecStartPre=-/usr/bin/rm -f %t/%n-pid %t/%n-cid
-# really, go away.
-ExecStartPre=-/usr/bin/podman stop prometheus
-# I said: Go. Away.
-ExecStartPre=-/usr/bin/podman rm prometheus
-# Thanks
-ExecStart=/usr/bin/podman run --detach --net=host --name simpleprom --conmon-pidfile %t/%n-pid --cidfile %t/%n-cid -p 9090:9090 simpleprom:latest --config.file=/etc/prometheus/prometheus.yaml --storage.tsdb.path=/prometheus --web.console.libraries=/usr/share/prometheus/console_libraries
-ExecStop=/usr/bin/sh -c "/usr/bin/podman rm -f `cat %t/%n-cid`"
+ExecStop=/usr/bin/podman stop simpleprom
+ExecStartPre=-/usr/bin/podman rm simpleprom
+ExecStart=/usr/bin/podman run \
+    --detach \
+    --net=host \
+    --name simpleprom \
+    --publish 9090:9090 \
+    --volume /usr/tmp/simpleprom.yaml:/etc/prometheus/prometheus.yaml \
+    prom/prometheus:latest \
+        --config.file=/etc/prometheus/prometheus.yaml \
+        --storage.tsdb.path=/prometheus \
+        --web.console.libraries=/usr/share/prometheus/console_libraries
 KillMode=none
 Type=forking
-PIDFile=%t/%n-pid
 
 [Install]
 WantedBy=multi-user.target

@@ -20,4 +20,7 @@ scrape_configs:
     static_configs:
          - targets: ['127.0.0.1:9117']
 #  - job_name: 'cadvisor'
-#  - job_name: 'node-exporter'
+  - job_name: 'node-exporter'
+    scrape_interval: 15s
+    static_configs:
+         - targets: ['127.0.0.1:9100']

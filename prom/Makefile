@@ -1,8 +1,6 @@
-build:
-	podman build -t simpleprom .
-
+.PHONY: install
 install:
-	cp simpleprom.service /etc/systemd/system/simpleprom.service
-	systemctl daemon-reload
-
-all: build install
+	mkdir -p ~/.config/systemd/user
+	cp simpleprom.service ~/.config/systemd/user/
+	systemctl --user daemon-reload
+	cp simpleprom.yaml /usr/tmp/simpleprom.yaml
