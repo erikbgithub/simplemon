@@ -3,6 +3,10 @@
 A simple monitoring example solution that integrates well with
 [simpleserver](https://github.com/rhdojun/simpleserver).
 
+Install it with: `make install` (which will call into the sub directories for you)
+
+Run it with: `make run`
+
 
 # Sources
 
