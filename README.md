@@ -33,3 +33,7 @@ May come in handy later:
    * the idea is great, have a meta service which will manage the other services for you that belong to a shared application
    * starting worked fine, but stopping not so much
    * dropped for now, will have a look again on a reworking session
+ * [Grafana alternative Consoles](https://prometheus.io/docs/visualization/consoles/)
+   * Grafana is nice for experiments and very beautiful
+   * capabilities are limited though, for instance when trying to automate
+   * consoles are a more flexible way and already in their documentation advertise that they can be hosted in SCM systems
