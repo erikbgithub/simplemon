@@ -1,15 +1,19 @@
+SLACK_URL := TODO set SLACK_URL variable!
+
+
+.PHONY: install run
 install:
 	make install -C node
 	make install -C prom
 	make install -C graf
+	make install -C alman SLACK_URL=$(SLACK_URL)
 
 run:
-	systemctl --user restart simple-node-exporter
-	systemctl --user restart simpleprom
+	make run -C node
 	systemctl --user restart simplegraf
-	systemctl --user status simple-node-exporter
-	systemctl --user status simpleprom
-	systemctl --user status simplegraf
+	systemctl --user status simplegraf --no-pager
+	make run -C prom
+	make run -C alman
 	podman ps
 
 all: install run

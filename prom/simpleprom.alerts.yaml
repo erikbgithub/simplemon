@@ -1,0 +1,24 @@
+groups:
+    - name: Alerting Rules
+      rules:
+          - alert: HighCPULoad
+            expr: node:cpu_instance_percent:sum3m > 12
+            for: 5m
+            labels:
+                severity: page
+            annotations:
+                summary: CPU Load is over 12%
+          - alert: HighMemLoad
+            expr: node:mem_bytes:percent > 12
+            for: 5m
+            labels:
+                severity: page
+            annotations:
+                summary: Memory Load is over 12%
+          - alert: HighDiskLoad
+            expr: node:filesystem_avail_bytes:percent > 12
+            for: 5m
+            labels:
+                severity: page
+            annotations:
+                summary: Diskpace is over 12% full

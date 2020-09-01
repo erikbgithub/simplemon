@@ -1,0 +1,24 @@
+[Unit]
+Description=Alert Manager
+
+[Service]
+Restart=on-failure
+RestartSec=30
+ExecStop=/usr/bin/podman stop simplealman
+ExecStartPre=-/usr/bin/podman rm simplealman
+ExecStartPre=mkdir -p /usr/tmp/simplealmandata
+ExecStart=/usr/bin/podman run \
+    --detach \
+    --net=host \
+    --name simplealman \
+    --publish 9093:9093 \
+    --volume /usr/tmp/simplealman.yaml:/etc/simplealman.yaml \
+    --volume /tmp/simplealmandata:/alertmanager:Z \
+    prom/alertmanager:latest \
+        --config.file=/etc/simplealman.yaml \
+        --storage.path=/tmp/data
+KillMode=none
+Type=forking
+
+[Install]
+WantedBy=default.target

@@ -11,13 +11,15 @@ ExecStart=/usr/bin/podman run \
     --net=host \
     --name simpleprom \
     --publish 9090:9090 \
-    --volume /usr/tmp/simpleprom.yaml:/etc/prometheus/prometheus.yaml \
+    --volume /usr/tmp/simpleprom.yaml:/etc/prometheus/simpleprom.yaml \
+    --volume /usr/tmp/simpleprom.recordings.yaml:/etc/prometheus/simpleprom.recordings.yaml \
+    --volume /usr/tmp/simpleprom.alerts.yaml:/etc/prometheus/simpleprom.alerts.yaml \
     prom/prometheus:latest \
-        --config.file=/etc/prometheus/prometheus.yaml \
+        --config.file=/etc/prometheus/simpleprom.yaml \
         --storage.tsdb.path=/prometheus \
         --web.console.libraries=/usr/share/prometheus/console_libraries
 KillMode=none
 Type=forking
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target

@@ -3,7 +3,13 @@
 A simple monitoring example solution that integrates well with
 [simpleserver](https://github.com/rhdojun/simpleserver).
 
-Install it with: `make install` (which will call into the sub directories for you)
+Install it with: `make install SLACK_URL=$SLACK_URL` (which will call into the sub directories for you)
+
+Set or replace `$SLACK_URL` to a
+[Webhook URL as described in this blog post](https://grafana.com/blog/2020/02/25/step-by-step-guide-to-setting-up-prometheus-alertmanager-with-slack-pagerduty-and-gmail/).
+It may be possible that your team already has a monitoring channel somewhere,
+if so you don't need to create a new webhook, just ask around. That makes the
+setup also quicker.
 
 Run it with: `make run`
 
@@ -22,6 +28,7 @@ documentation is TODO, but in the mean time hopefully these can help:
  * [Another Apache stats related article](https://www.tecmint.com/monitor-apache-web-server-load-and-page-statistics/)
  * [CPU Usage Metrics](https://www.robustperception.io/understanding-machine-cpu-usage)
  * [Disk Usage Metrics](https://devconnected.com/monitoring-disk-i-o-on-linux-with-the-node-exporter/)
+ * [Better Living Through Stats](https://github.com/jaqx0r/blts) <- from an ex-googler, he knows this stuff in and out it seems
 
 May come in handy later:
 

@@ -1,0 +1,9 @@
+groups:
+    - name: cpu
+      rules:
+          - record: node:cpu_instance_percent:sum3m
+            expr: 1 - (sum by (instance) (rate(node_cpu_seconds_total{mode="idle"}[3m]))) / (sum by (instance) (rate(node_cpu_seconds_total[3m])))
+          - record: node:mem_bytes:percent
+            expr: ((node_memory_MemTotal_bytes - node_memory_MemFree_bytes) / node_memory_MemTotal_bytes) * 100
+          - record: node:filesystem_avail_bytes:percent
+            expr: (1 - (node_filesystem_avail_bytes / node_filesystem_size_bytes)) * 100
