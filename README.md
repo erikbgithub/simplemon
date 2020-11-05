@@ -14,6 +14,30 @@ setup also quicker.
 Run it with: `make run`
 
 
+# Architecture
+
+The architecture of the monitoring stack is like a house. At the foundation
+there is Prometheus which will collect the data, store it locally and offer
+a query API. On top are different components that provide specific features.
+While Prometheus will work fine without the other components many of the other
+components will not work without Prometheus or another, similar data storage
+system.
+
+The components currently chosen are:
+
+ * Prometheus (in /prom): Data collector, timeseries db, promQL querier
+ * Grafana (in /graf): Data filter and and visualizer
+ * Node Exporter (in /node): collect data from the host the Exporter is running
+   on and present it in collectable form to Prometheus
+ * Alert Manager (in /alman): filter Prometheus data repeatedly and if certain
+   limits are reached send alerts to different sources like Slack
+ * Thanos (in /thanos): HA layer and multi-prom-querier for Prometheus
+
+At the time of this writing the connection to the
+[simpleserver](https://github.com/rhdojun/simpleserver) project, and the
+Thanos integration is WIP.
+
+
 # Sources
 
 The following articles have been used in the creation of this repo. Better
