@@ -1,0 +1,23 @@
+- prometheus:
+  - just normal, only change may be the new scrape targets (see below)
+  - maybe set external_labels if not set
+- sidecar:
+  - quay.io/thanos/thanos image
+  - with sidecar as sub-command
+  - only names are different for different prom instances
+  - --http-address 0.0.0.0:19090
+  - --grpc-address 0.0.0.0:19190
+  - --reloader.config-file /etc/prometheus/prometheus.y(a)ml
+  - prometheus.url http://127.0.0.1:9090
+  - prometheus yaml gets a new scrap config:
+    - job_name: 'sidecar' / static_configs: / - targets: ['127.0.0.1:19091', '127.0.0.1:19092']
+- querier:
+  - also thanos image with 'query' subcommand
+  - http: :29090
+  - --query.replica-label replica
+  - --store 127.0.0.1:1919{0,1,2} (three similar lines with diff. endings)
+- compactor: not used a the moment due to requirement to work with objstore
+- ruler:
+  - https://github.com/thanos-io/thanos/blob/master/docs/components/rule.md
+  - not recommended if the rule can be expressed locally in the prometheus
+  - also strongly dependent on reliable queries, therefore it seems the maintainers discourage using it
